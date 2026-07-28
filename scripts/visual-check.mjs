@@ -1,0 +1,28 @@
+import { mkdir } from 'node:fs/promises'
+import { fileURLToPath } from 'node:url'
+import { chromium } from '@playwright/test'
+
+const output = new URL('../test-results/visual/', import.meta.url)
+await mkdir(output, { recursive: true })
+const browser = await chromium.launch({ channel: 'chrome', headless: true })
+
+for (const viewport of [{ name: 'desktop', width: 1440, height: 900 }, { name: 'mobile', width: 390, height: 844 }]) {
+  const page = await browser.newPage({ viewport })
+  await page.goto('http://localhost:3000', { waitUntil: 'networkidle' })
+  const report = await page.evaluate(() => ({
+    clientWidth: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    heroImageReady: (() => { const image = document.querySelector('.home-hero img'); return image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0 })(),
+    emptyTextNodes: Array.from(document.querySelectorAll('h1,h2,h3,button,a')).filter((element) => !element.textContent?.trim() && !element.getAttribute('aria-label')).length,
+  }))
+  if (report.scrollWidth > report.clientWidth + 1 || !report.heroImageReady || report.emptyTextNodes > 0) {
+    throw new Error(`${viewport.name} visual check failed: ${JSON.stringify(report)}`)
+  }
+  await page.screenshot({ path: fileURLToPath(new URL(`home-${viewport.name}.png`, output)), fullPage: true })
+  await page.goto('http://localhost:3000/careers/medical-assistant', { waitUntil: 'networkidle' })
+  await page.screenshot({ path: fileURLToPath(new URL(`career-${viewport.name}.png`, output)), fullPage: true })
+  await page.close()
+}
+
+await browser.close()
+console.log('Visual checks passed for desktop and mobile; screenshots are in test-results/visual.')
