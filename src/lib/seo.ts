@@ -76,6 +76,14 @@ export function schemaForContent(item: PublicContent) {
     publisher: { '@type': 'Organization', name: site.operatorName, url: site.url },
     isPartOf: { '@type': 'WebSite', name: site.name, url: site.url },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    image: {
+      '@type': 'ImageObject',
+      url: absoluteUrl(item.visuals.lead.src),
+      caption: item.visuals.lead.caption,
+      creditText: item.visuals.lead.credit,
+      license: item.visuals.lead.licenseUrl,
+      acquireLicensePage: item.visuals.lead.sourceUrl,
+    },
     citation: item.sources.map((source) => source.url),
     spatialCoverage: item.jurisdiction,
   }

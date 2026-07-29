@@ -58,6 +58,38 @@ export const Content: CollectionConfig = {
     },
     { name: 'summary', type: 'textarea', required: true },
     {
+      name: 'visuals',
+      type: 'group',
+      fields: [
+        {
+          name: 'lead',
+          type: 'group',
+          fields: [
+            { name: 'src', type: 'text', required: true },
+            { name: 'alt', type: 'text', required: true },
+            { name: 'caption', type: 'textarea', required: true },
+            { name: 'credit', type: 'text', required: true },
+            { name: 'sourceUrl', type: 'text', required: true },
+            { name: 'licenseName', type: 'text', required: true },
+            { name: 'licenseUrl', type: 'text', required: true },
+          ],
+        },
+        {
+          name: 'inline',
+          type: 'group',
+          fields: [
+            { name: 'src', type: 'text', required: true },
+            { name: 'alt', type: 'text', required: true },
+            { name: 'caption', type: 'textarea', required: true },
+            { name: 'credit', type: 'text', required: true },
+            { name: 'sourceUrl', type: 'text', required: true },
+            { name: 'licenseName', type: 'text', required: true },
+            { name: 'licenseUrl', type: 'text', required: true },
+          ],
+        },
+      ],
+    },
+    {
       name: 'sections',
       type: 'array',
       minRows: 3,

@@ -63,7 +63,11 @@ img { display: block; max-width: 100%; }
 .section-heading h2, .editorial-copy h2, .data-layout h2 { max-width: 740px; margin: 0; font: 600 34px/1.18 var(--serif); }
 .text-link { display: inline-flex; align-items: center; gap: 5px; color: var(--evergreen); font-weight: 600; }
 .card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.content-card { min-height: 280px; display: flex; flex-direction: column; padding: 23px; border: 1px solid var(--line); border-radius: 6px; background: white; }
+.content-card { min-height: 430px; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: white; }
+.content-card-media { position: relative; flex: 0 0 auto; aspect-ratio: 16 / 9; overflow: hidden; background: #e9eeeb; }
+.content-card-media img { object-fit: cover; transition: transform .35s ease; }
+.content-card-media:hover img { transform: scale(1.025); }
+.content-card-body { min-height: 245px; display: flex; flex: 1; flex-direction: column; padding: 20px 22px 22px; }
 .card-meta { min-height: 36px; display: flex; justify-content: space-between; gap: 10px; color: var(--muted); font: 500 11px/1.4 var(--mono); text-transform: uppercase; }
 .card-meta span:last-child { display: inline-flex; align-items: flex-start; gap: 5px; text-align: right; }
 .content-card h3 { margin: 12px 0 10px; font: 600 23px/1.22 var(--serif); }
@@ -100,10 +104,21 @@ img { display: block; max-width: 100%; }
 .article-shell { width: min(1200px, calc(100% - 48px)); margin: 0 auto; padding: 30px 0 90px; }
 .breadcrumbs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 38px; color: var(--muted); font-size: 12px; text-transform: capitalize; }
 .breadcrumbs a { color: var(--evergreen); }
-.article-header { max-width: 880px; margin-bottom: 30px; }
+.article-header { max-width: 920px; margin-bottom: 30px; }
 .article-header h1 { margin: 7px 0 15px; font: 600 50px/1.08 var(--serif); overflow-wrap: anywhere; }
 .article-dek { max-width: 780px; margin: 0; color: #42504c; font: 400 20px/1.55 var(--sans); }
 .byline { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 22px; color: var(--muted); font-size: 12px; }
+.editorial-figure { margin: 0; }
+.editorial-image-frame { position: relative; overflow: hidden; background: #e9eeeb; }
+.editorial-image-frame img { object-fit: cover; }
+.editorial-figure-lead { margin: 32px 0 0; }
+.editorial-figure-lead .editorial-image-frame { aspect-ratio: 16 / 8.7; border-radius: 6px 6px 0 0; }
+.editorial-figure-inline { margin: -4px 0 48px; }
+.editorial-figure-inline .editorial-image-frame { aspect-ratio: 3 / 2; border-radius: 6px 6px 0 0; }
+.editorial-figure figcaption { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; padding: 11px 2px 14px; color: var(--muted); border-bottom: 1px solid var(--line); font-size: 11px; line-height: 1.55; }
+.editorial-figure figcaption > span:first-child { max-width: 760px; }
+.image-credit { white-space: nowrap; text-align: right; }
+.image-credit a { color: #46524f; }
 .fact-strip { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .fact-strip > div { min-height: 92px; display: flex; align-items: center; gap: 11px; padding: 18px; border-right: 1px solid var(--line); }
 .fact-strip > div:last-child { border-right: 0; }
@@ -228,7 +243,8 @@ img { display: block; max-width: 100%; }
   .section-heading.split { align-items: flex-start; flex-direction: column; }
   .section-heading h2, .editorial-copy h2, .data-layout h2 { font-size: 29px; }
   .card-grid { grid-template-columns: 1fr; }
-  .content-card { min-height: 250px; }
+  .content-card { min-height: 0; }
+  .content-card-body { min-height: 230px; }
   .editorial-band, .data-layout { grid-template-columns: 1fr; }
   .editorial-media { min-height: 300px; }
   .editorial-copy { padding: 48px 20px 54px; }
@@ -239,6 +255,10 @@ img { display: block; max-width: 100%; }
   .breadcrumbs { margin-bottom: 26px; }
   .article-header h1 { font-size: 36px; line-height: 1.12; }
   .article-dek { font-size: 17px; }
+  .editorial-figure-lead { margin-top: 26px; }
+  .editorial-figure-lead .editorial-image-frame { aspect-ratio: 4 / 3; }
+  .editorial-figure figcaption { grid-template-columns: 1fr; gap: 6px; }
+  .image-credit { white-space: normal; text-align: left; }
   .fact-strip { grid-template-columns: 1fr 1fr; }
   .fact-strip > div { min-height: 82px; border-bottom: 1px solid var(--line); }
   .fact-strip > div:nth-child(even) { border-right: 0; }

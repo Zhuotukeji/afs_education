@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { ArrowRight, CalendarDays, CheckCircle2, ExternalLink, MapPin, ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
 
@@ -5,6 +6,7 @@ import { allContent, contentBySlug } from '@/content/catalog'
 import type { PublicContent } from '@/content/types'
 import { breadcrumbSchema, schemaForContent } from '@/lib/seo'
 import { ContentCard } from './ContentCard'
+import { EditorialFigure } from './EditorialFigure'
 import { RelatedSearchUnit } from './AfsUnit'
 import { JsonLd } from './JsonLd'
 
@@ -36,6 +38,7 @@ export function ContentPage({ item }: { item: PublicContent }) {
             <p className="article-dek">{item.summary}</p>
             <div className="byline"><span>By Career Path Brief Editorial Team</span><span>Reviewed {item.updatedAt}</span></div>
           </header>
+          <EditorialFigure image={item.visuals.lead} priority variant="lead" />
           <div className="fact-strip">
             <div><CalendarDays size={18} /><span><strong>Data year</strong>{item.dataYear}</span></div>
             <div><MapPin size={18} /><span><strong>Coverage</strong>{item.jurisdiction}</span></div>
@@ -53,7 +56,7 @@ export function ContentPage({ item }: { item: PublicContent }) {
             <div className="article-layout">
               <aside className="toc" aria-label="On this page"><p>On this page</p>{item.sections.map((section, index) => <a href={`#section-${index}`} key={section.heading}>{section.heading}</a>)}</aside>
               <article className="prose">
-                {item.sections.map((section, index) => <section id={`section-${index}`} key={section.heading}><h2>{section.heading}</h2><p>{section.body}</p>{index === 1 && <div className="reality-note"><strong>Editorial check</strong><span>{item.originalEvidence}</span></div>}</section>)}
+                {item.sections.map((section, index) => <Fragment key={section.heading}><section id={`section-${index}`}><h2>{section.heading}</h2><p>{section.body}</p>{index === 1 && <div className="reality-note"><strong>Editorial check</strong><span>{item.originalEvidence}</span></div>}</section>{index === 1 && <EditorialFigure image={item.visuals.inline} />}</Fragment>)}
               </article>
               <aside className="evidence-rail">
                 <p className="rail-title">Evidence file</p>

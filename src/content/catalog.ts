@@ -1,4 +1,5 @@
 import type { ContentSection, ContentType, PublicContent, SourceCitation } from './types'
+import { resolveEditorialVisuals } from './images'
 
 const UPDATED_AT = '2026-07-28'
 const DATA_YEAR = 2025
@@ -187,8 +188,8 @@ function paragraph(text: string) {
   return text.replace(/\s+/g, ' ').trim()
 }
 
-function makeContent(input: Omit<PublicContent, 'dataYear' | 'editorMemo' | 'originalEvidence' | 'qualityScore' | 'relatedSlugs' | 'updatedAt'> & Partial<Pick<PublicContent, 'dataYear' | 'editorMemo' | 'originalEvidence' | 'qualityScore' | 'relatedSlugs'>>): PublicContent {
-  return {
+function makeContent(input: Omit<PublicContent, 'dataYear' | 'editorMemo' | 'originalEvidence' | 'qualityScore' | 'relatedSlugs' | 'updatedAt' | 'visuals'> & Partial<Pick<PublicContent, 'dataYear' | 'editorMemo' | 'originalEvidence' | 'qualityScore' | 'relatedSlugs'>>): PublicContent {
+  const content = {
     dataYear: input.dataYear ?? DATA_YEAR,
     editorMemo: input.editorMemo ?? `Answer the practical decision behind ${input.title}; state the tradeoffs and avoid promises.`,
     originalEvidence: input.originalEvidence ?? 'Editorial synthesis of the cited primary sources, with requirements and limitations compared side by side.',
@@ -197,6 +198,7 @@ function makeContent(input: Omit<PublicContent, 'dataYear' | 'editorMemo' | 'ori
     updatedAt: UPDATED_AT,
     ...input,
   }
+  return { ...content, visuals: resolveEditorialVisuals(content) }
 }
 
 function careerContent(seed: CareerSeed, index: number): PublicContent {

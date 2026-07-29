@@ -22,6 +22,21 @@ export interface ContentSection {
   heading: string
 }
 
+export interface EditorialImage {
+  alt: string
+  caption: string
+  credit: string
+  licenseName: string
+  licenseUrl: string
+  sourceUrl: string
+  src: string
+}
+
+export interface ContentVisuals {
+  inline: EditorialImage
+  lead: EditorialImage
+}
+
 export interface PublicContent {
   contentType: ContentType
   dataYear: number
@@ -39,4 +54,5 @@ export interface PublicContent {
   summary: string
   title: string
   updatedAt: string
+  visuals: ContentVisuals
 }

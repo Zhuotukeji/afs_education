@@ -15,6 +15,9 @@ test.describe('public site', () => {
     await expect(page.getByRole('heading', { level: 1, name: 'How to Become a Medical Assistant' })).toBeVisible()
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/careers\/medical-assistant$/)
     await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(2)
+    await expect(page.locator('.editorial-figure')).toHaveCount(2)
+    await expect(page.locator('.editorial-figure-lead img')).toBeVisible()
+    await expect(page.locator('.image-credit').first()).toContainText('Pexels License')
     await expect(page.getByRole('heading', { name: 'Primary references' })).toBeVisible()
   })
 

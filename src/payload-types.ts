@@ -229,6 +229,26 @@ export interface Content {
     | 'research'
     | 'tool';
   summary: string;
+  visuals: {
+    lead: {
+      src: string;
+      alt: string;
+      caption: string;
+      credit: string;
+      sourceUrl: string;
+      licenseName: string;
+      licenseUrl: string;
+    };
+    inline: {
+      src: string;
+      alt: string;
+      caption: string;
+      credit: string;
+      sourceUrl: string;
+      licenseName: string;
+      licenseUrl: string;
+    };
+  };
   sections: {
     heading: string;
     body: string;
@@ -525,6 +545,32 @@ export interface ContentSelect<T extends boolean = true> {
   slug?: T;
   contentType?: T;
   summary?: T;
+  visuals?:
+    | T
+    | {
+        lead?:
+          | T
+          | {
+              src?: T;
+              alt?: T;
+              caption?: T;
+              credit?: T;
+              sourceUrl?: T;
+              licenseName?: T;
+              licenseUrl?: T;
+            };
+        inline?:
+          | T
+          | {
+              src?: T;
+              alt?: T;
+              caption?: T;
+              credit?: T;
+              sourceUrl?: T;
+              licenseName?: T;
+              licenseUrl?: T;
+            };
+      };
   sections?:
     | T
     | {

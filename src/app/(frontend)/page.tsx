@@ -15,10 +15,12 @@ export const metadata: Metadata = {
   openGraph: { title: 'Career Path Brief', description: 'Source-backed career decisions.', url: absoluteUrl('/'), images: ['/assets/hero-trades.jpg'] },
 }
 
-const careers = allContent.filter((item) => item.contentType === 'career').slice(0, 6)
+const featuredCareerSlugs = ['medical-assistant', 'electrician', 'automotive-service-technician', 'solar-photovoltaic-installer', 'network-support-specialist', 'project-coordinator']
+const careers = featuredCareerSlugs.map((slug) => allContent.find((item) => item.slug === slug)!)
 const reality = allContent.find((item) => item.slug === 'entry-level-it-interruption-work')!
 const credential = allContent.find((item) => item.slug === 'epa-608')!
 const tools = allContent.filter((item) => item.contentType === 'tool')
+const freshReads = ['claims-adjusting-after-catastrophe', 'training-time-vs-entry-wage', 'avoid-training-scams'].map((slug) => allContent.find((item) => item.slug === slug)!)
 
 export default function HomePage() {
   const organization = { '@context': 'https://schema.org', '@type': 'Organization', name: 'Career Path Brief Editorial Team', url: absoluteUrl('/'), email: process.env.CONTACT_EMAIL || undefined }
@@ -40,6 +42,8 @@ export default function HomePage() {
 
     <section className="page-band paper"><div className="band-inner data-layout"><div><p className="eyebrow">Research desk</p><h2>A credential can be required, preferred, or simply marketed well.</h2><p className="large-copy">We keep those categories separate and link every conclusion back to the issuing body or regulator.</p><Link className="button-link" href={credential.path}>See the EPA 608 decision guide <ArrowRight size={16}/></Link></div><div className="data-figure" role="img" aria-label="Illustrative credential decision evidence ladder"><div className="chart-row"><span>Legal requirement</span><i style={{width:'88%'}}/></div><div className="chart-row"><span>Employer preference</span><i style={{width:'62%'}}/></div><div className="chart-row"><span>Optional signal</span><i style={{width:'38%'}}/></div><p><BarChart3 size={16}/> Classification is page-specific, not a universal score.</p></div></div></section>
 
-    <section className="page-band"><div className="band-inner"><div className="section-heading"><p className="eyebrow">Planning tools</p><h2>Put your own constraints into the decision</h2></div><div className="tool-grid">{tools.map((tool, index) => <Link className="tool-card" href={tool.path} key={tool.path}>{index % 2 ? <BookOpenCheck/> : <Wrench/>}<span><strong>{tool.title}</strong><small>{tool.summary}</small></span><ArrowRight/></Link>)}</div></div></section>
+    <section className="page-band"><div className="band-inner"><div className="section-heading split"><div><p className="eyebrow">Fresh from the desks</p><h2>Three decisions worth a closer look</h2></div><Link className="text-link" href="/research">Visit the research desk <ArrowRight size={16}/></Link></div><div className="card-grid">{freshReads.map((item) => <ContentCard key={item.path} item={item}/>)}</div></div></section>
+
+    <section className="page-band paper"><div className="band-inner"><div className="section-heading"><p className="eyebrow">Planning tools</p><h2>Put your own constraints into the decision</h2></div><div className="tool-grid">{tools.map((tool, index) => <Link className="tool-card" href={tool.path} key={tool.path}>{index % 2 ? <BookOpenCheck/> : <Wrench/>}<span><strong>{tool.title}</strong><small>{tool.summary}</small></span><ArrowRight/></Link>)}</div></div></section>
   </main>
 }

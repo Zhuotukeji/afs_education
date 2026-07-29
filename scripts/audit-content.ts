@@ -1,4 +1,6 @@
 import { allContent, contentCounts } from '../src/content/catalog'
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
 
 const expectedCounts = {
   hub: 9,
@@ -46,6 +48,17 @@ for (const item of allContent) {
   if (item.sources.length < 2) errors.push(`${item.path} has fewer than two sources.`)
   if (item.qualityScore < 85) errors.push(`${item.path} fails the 85-point quality gate.`)
   if (!item.editorMemo || !item.originalEvidence) errors.push(`${item.path} lacks private editorial evidence.`)
+  for (const [placement, image] of Object.entries(item.visuals)) {
+    if (!image.alt || !image.caption || !image.credit || !image.sourceUrl || !image.licenseUrl) {
+      errors.push(`${item.path} has incomplete ${placement} image metadata.`)
+    }
+    if (!image.src.startsWith('/assets/') || !existsSync(join(process.cwd(), 'public', image.src))) {
+      errors.push(`${item.path} references a missing local ${placement} image: ${image.src}`)
+    }
+    if (!image.sourceUrl.startsWith('https://') || !image.licenseUrl.startsWith('https://')) {
+      errors.push(`${item.path} has an invalid ${placement} image source or license URL.`)
+    }
+  }
   if (item.seoDescription.length < 80 || item.seoDescription.length > 180) {
     errors.push(`${item.path} SEO description length is ${item.seoDescription.length}.`)
   }

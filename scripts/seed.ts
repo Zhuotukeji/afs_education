@@ -13,6 +13,7 @@ for (const item of allContent) {
     slug: item.slug,
     contentType: item.contentType,
     summary: item.summary,
+    visuals: item.visuals,
     sections: item.sections,
     workflowStatus: 'approved' as const,
     editorMemo: item.editorMemo,
